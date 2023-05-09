@@ -68,11 +68,17 @@ class XnliProcessor(DataProcessor):
             lines = self._read_tsv(file_path)
             for (i, line) in enumerate(lines):
                 guid = "%s-%s-%s" % ("translate-train", lg, i)
-                text_a = line[0]
-                text_b = line[1]
-                label = "contradiction" if line[2].strip() == "contradictory" else line[2].strip()
+                text_a = line[2]
+                text_b = line[3]
+                label = "contradiction" if line[4].strip() == "contradictory" else line[4].strip()
                 assert isinstance(text_a, str) and isinstance(text_b, str) and isinstance(label, str)
                 examples.append(InputExample(guid=guid, text_a=text_a, text_b=text_b, label=label, language=lg))
+
+                if i == 0:
+                    print(f"text_a: {text_a}")
+                    print(f"text_b: {text_b}")
+                    print(f"label: {label}")
+
         return examples
 
     def get_translate_test_examples(self, data_dir, language='en'):

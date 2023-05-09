@@ -825,7 +825,9 @@ def main():
         total_correct += result['correct']
       writer.write('total={}\n'.format(total_correct / total))
 
-  return result
+  train_dataset = load_and_cache_examples(args, args.task_name, tokenizer, split=args.train_split, language=args.train_language, lang2id=lang2id, evaluate=False)
+
+  # return result
 
 
 if __name__ == "__main__":
